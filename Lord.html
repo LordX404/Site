@@ -4,49 +4,172 @@
   <meta charset="UTF-8">
   <title>Meus Perfis</title>
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      border: 5px solid #333;
-      padding: 20px;
-      text-align: center;
-      background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoO8jcRBRvbEtEuUxzfihHAMHsqqlV4QAs_JyZXp-0Bmu5zWT-iwdmM1ZY&s=10');
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-attachment: fixed;
+      position: relative;
+      overflow: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       font-family: Arial, sans-serif;
+      background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoO8jcRBRvbEtEuUxzfihHAMHsqqlV4QAs_JyZXp-0Bmu5zWT-iwdmM1ZY&s=10') no-repeat center center fixed;
+      background-size: cover;
+      animation: backgroundMove 60s linear infinite;
       color: white;
     }
 
+    @keyframes backgroundMove {
+      0% { background-position: 50% 0%; }
+      50% { background-position: 50% 100%; }
+      100% { background-position: 50% 0%; }
+    }
+
+    /* Meteoros voando reto por toda a tela */
+    .meteor {
+      position: absolute;
+      width: 50px;
+      height: 10px;
+      background: linear-gradient(to right, white, #ff6600, #ff0000);
+      border-radius: 50%;
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
+      animation: meteorAnimar 3s linear infinite;
+    }
+
+    @keyframes meteorAnimar {
+      0% {
+        top: -10%;
+        left: 50%;
+        transform: rotate(0deg);
+      }
+      100% {
+        top: 110%;
+        left: 50%;
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Estrelas */
+    .estrela {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: radial-gradient(white, #0ff, #f0f);
+      opacity: 0;
+      animation: estrelaAnimar 3s forwards;
+      pointer-events: none;
+    }
+
+    @keyframes estrelaAnimar {
+      0% { transform: scale(0); opacity: 0.5; }
+      50% { transform: scale(1.5); opacity: 1; }
+      100% { transform: scale(0); opacity: 0; }
+    }
+
+    /* Título */
     h1 {
-      font-size: 36px;
-      animation: colorChange 3s infinite;
+      font-size: 48px;
+      margin-bottom: 40px;
+      animation: colorChange 3s infinite, glowText 2s infinite alternate;
+      z-index: 2;
+      text-align: center;
     }
 
     @keyframes colorChange {
-      0%   { color: red; }
-      25%  { color: blue; }
-      50%  { color: green; }
-      75%  { color: orange; }
+      0% { color: red; }
+      25% { color: blue; }
+      50% { color: green; }
+      75% { color: orange; }
       100% { color: purple; }
     }
 
-    .botao {
-      display: inline-block;
-      padding: 15px 30px;
-      margin: 15px;
+    @keyframes glowText {
+      0% { text-shadow: 0 0 10px #fff, 0 0 20px #0ff; }
+      100% { text-shadow: 0 0 20px #fff, 0 0 40px #0ff; }
+    }
+
+    /* Perfil */
+    .perfil {
+      background-color: rgba(0, 0, 0, 0.7);
+      border-radius: 30px;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      animation: glowBorder 2s infinite alternate;
+      z-index: 2;
+      position: relative;
+      max-width: 400px;
+      width: 90%;
+    }
+
+    @keyframes glowBorder {
+      0% { box-shadow: 0 0 15px #00ffff; }
+      100% { box-shadow: 0 0 30px #00ffff; }
+    }
+
+    .imagem-container {
+      position: relative;
+      width: 200px;
+      height: 200px;
+    }
+
+    .imagem-container img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 5px solid white;
+      object-fit: cover;
+      position: relative;
+      z-index: 2;
+      animation: neonGlow 2s infinite alternate;
+    }
+
+    @keyframes neonGlow {
+      0% { box-shadow: 0 0 20px #00ffff, 0 0 40px #ff00ff; }
+      100% { box-shadow: 0 0 40px #00ffff, 0 0 80px #ff00ff; }
+    }
+
+    .perfil p {
       font-size: 18px;
+      text-align: center;
+      color: white;
+      padding: 0 10px;
+    }
+
+    .botoes {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .botao {
+      padding: 15px 30px;
+      border-radius: 20px;
+      font-size: 20px;
       font-weight: bold;
       color: white;
       border: none;
-      border-radius: 15px;
-      cursor: pointer;
       text-decoration: none;
+      min-width: 220px;
       transition: all 0.3s ease;
+      animation: glowButton 1.5s infinite alternate;
+      position: relative;
     }
 
-    .botao:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    @keyframes glowButton {
+      0% { box-shadow: 0 0 10px #fff, 0 0 20px #fff; }
+      100% { box-shadow: 0 0 20px #0ff, 0 0 40px #f0f; }
     }
 
     .instagram {
@@ -65,43 +188,65 @@
       background: linear-gradient(45deg, #DA291C, #870000);
     }
 
-    .perfil {
-      margin-top: 40px;
-      border: 3px solid white;
-      padding: 20px;
-      border-radius: 20px;
-      background-color: rgba(0, 0, 0, 0.5);
-      display: inline-block;
-    }
-
-    .perfil img {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      border: 3px solid white;
-      object-fit: cover;
-      margin-bottom: 15px;
-    }
-
-    .perfil p {
-      font-size: 16px;
-      max-width: 300px;
-      margin: 0 auto;
+    .botao:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 30px white;
     }
   </style>
 </head>
 <body>
 
+  <!-- Meteoros -->
+  <script>
+    function criarMeteoro() {
+      const meteoro = document.createElement('div');
+      meteoro.classList.add('meteor');
+      meteoro.style.top = -Math.random() * 200 + 'px';
+      meteoro.style.left = Math.random() * window.innerWidth + 'px';
+      meteoro.style.animationDuration = (Math.random() * 2 + 3) + 's';
+      meteoro.style.animationDelay = Math.random() * 2 + 's';
+      document.body.appendChild(meteoro);
+      
+      setTimeout(() => {
+        meteoro.remove();
+      }, 5000); // Duração dos meteoros
+    }
+
+    setInterval(criarMeteoro, 200); // Intervalo para gerar meteoros
+  </script>
+
+  <!-- Estrelas -->
+  <script>
+    function criarEstrela() {
+      const estrela = document.createElement('div');
+      estrela.classList.add('estrela');
+      estrela.style.top = Math.random() * window.innerHeight + 'px';
+      estrela.style.left = Math.random() * window.innerWidth + 'px';
+      estrela.style.animationDuration = (Math.random() * 2 + 2) + 's';
+      document.body.appendChild(estrela);
+      
+      setTimeout(() => {
+        estrela.remove();
+      }, 3000); // Duração das estrelas
+    }
+
+    setInterval(criarEstrela, 100); // Intervalo para gerar estrelas
+  </script>
+
   <h1>Meus Perfis nas Redes!</h1>
 
-  <a class="botao instagram" href="https://www.instagram.com/?deoia=1" target="_blank">Clique aqui - Instagram</a>
-  <a class="botao youtube" href="https://youtube.com/@darkingblack140?si=6gCsBtHV40KeHJBx" target="_blank">Clique aqui - YouTube</a>
-  <a class="botao tiktok" href="https://www.tiktok.com/@encourado_" target="_blank">Clique aqui - TikTok</a>
-  <a class="botao roblox" href="https://www.roblox.com/pt/users/2210975777/profile" target="_blank">Clique aqui - Roblox</a>
-
   <div class="perfil">
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtChx-3nbhGf3TW6k6XtW9X1R31GaWfznRmOd9ox5ObcMqezqsoNrV-38&s=10" alt="Minha Foto de Perfil">
-    <p>Eaeeeeeee! Me chamo Pablo, mas pd me chamar de LordX ou simplesmente de Lord, só queria pedir pra vc pfv clicar nos botões ai pra seguir eu, custa nd não, só pra dar uma ajudinha, obrigaduh :)</p>
+    <div class="imagem-container">
+      <img src="https://villaville.com/images/capa/z202401011612069037205_36220_capa.jpg" alt="Minha Foto de Perfil">
+    </div>
+    <p>Eaeeeeeee! Me chamo Pablo, mas pode me chamar de LordX ou simplesmente Lord! Dá uma força clicando nos botões abaixo para me seguir! Valeu demais 🔥🚀</p>
+
+    <div class="botoes">
+      <a class="botao instagram" href="https://www.instagram.com/?deoia=1" target="_blank">Instagram</a>
+      <a class="botao youtube" href="https://youtube.com/@darkingblack140?si=6gCsBtHV40KeHJBx" target="_blank">YouTube</a>
+      <a class="botao tiktok" href="https://www.tiktok.com/@encourado_" target="_blank">TikTok</a>
+      <a class="botao roblox" href="https://www.roblox.com/pt/users/2210975777/profile" target="_blank">Roblox</a>
+    </div>
   </div>
 
 </body>
